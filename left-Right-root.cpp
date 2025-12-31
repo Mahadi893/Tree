@@ -1,51 +1,51 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-
-class Node {
+class Node
+{
 public:
     int data;
     Node* left;
     Node* right;
-
-    Node(int val) {
+    Node(int val)
+    {
         data = val;
-        left = NULL;
-        right = NULL;
+        left = right = NULL;
     }
 };
-
-Node* buildTree(vector<int>& preorder, int& idx) {
+static int idx = -1;
+Node* buildTree(vector<int>preorder)
+{
     idx++;
-
-    if ( preorder[idx] == -1) {
-        return NULL;    
+    if(preorder[idx] == -1)
+    {
+        return NULL;
     }
-
     Node* root = new Node(preorder[idx]);
-    root->left = buildTree(preorder, idx);
-    root->right = buildTree(preorder, idx);
-
+    root->left = buildTree(preorder);
+    root->right = buildTree(preorder);
     return root;
 }
-
-void postorderPrint(Node* root) {
-    if (root == NULL) 
+void postorderPrint(Node* root)
+{
+    if(root == NULL)
     {
-     return;
+        return;
     }
     postorderPrint(root->left);
-    postorderPrint(root->right);
-    cout << root->data << " ";
+    postorderPrint(root->right);    
+    cout<<root->data<<" ";
 }
 
-int main() {
-    vector<int> postorder = {1,2,-1,-1,3,4,-1,-1,5,-1,-1};
-
-    int idx = -1;
-    Node* root = buildTree(postorder, idx);
-
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    vector<int>preorder = {1,2,-1,-1,3,4,-1,-1,5,-1,-1};
+    Node* root = buildTree(preorder);
     postorderPrint(root);
-    cout << endl;
+    cout<<endl;
 
     return 0;
 }
+
+// postorder : left right root
